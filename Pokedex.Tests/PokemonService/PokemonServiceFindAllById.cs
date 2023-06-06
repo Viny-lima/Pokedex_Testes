@@ -13,12 +13,8 @@ namespace Pokedex.Tests
     [Collection("Database")]
     public class PokemonServiceFindAllById
     {
-
-        DatabaseFixture _databaseFixture;
-
-        public PokemonServiceFindAllById(DatabaseFixture fixture)
+        public PokemonServiceFindAllById()
         {
-            _databaseFixture = fixture;
         }
 
         [Theory]
