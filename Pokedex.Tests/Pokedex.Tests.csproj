@@ -25,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="2_INTERACAO\" />
-    <Folder Include="3_INTERACAO\" />
     <Folder Include="4_INTERACAO\" />
   </ItemGroup>
 
