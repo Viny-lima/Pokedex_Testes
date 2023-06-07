@@ -1,29 +1,28 @@
-﻿using Pokedex.Model.Entities;
+﻿using Pokedex.Model.DAO;
+using Pokedex.Model.Entities;
 using Pokedex.Model.Service;
-using Pokedex.Tests.Startup;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace Pokedex.Tests
+namespace Pokedex.Tests._4_INTERACAO
 {
-
     [Collection("Database")]
-    public class PokemonServiceHelperSetId
+    public class RQ4_CadastroNovosPokemonsComFaixaMaiorQueDaAPI
     {
-        DatabaseFixture _databaseFixture;
-
-        public PokemonServiceHelperSetId(DatabaseFixture fixture)
-        {
-            _databaseFixture = fixture;
-        }
 
         [Fact]
-        public async void RealizeAlteracaoNoId()
+        public async void CadastrandoPokemonComIDMaiorQueDaAPI()
         {
-            //Arrange
+            var faixaDeValoresDeCadastrados = 100000;
+            PokemonService pokemonService = new PokemonService();
 
             var pokemon = new PokemonDB()
             {
-                Name = "NomeTest",
+                Name = "PokemonTest",
                 Hp = 100,
                 Attack = 100,
                 Defense = 100,
@@ -41,12 +40,15 @@ namespace Pokedex.Tests
             await pokemon.AddType("Type1 Test");
             await pokemon.AddType("Type2 Test");
 
-            //Act
             await pokemon.SetId();
 
-            //Assert
-            Assert.True(pokemon.Id >= 100001);
+            //Act
+            await new PokemonService().RegisterIsCreatedByUser(pokemon);
 
+            //Assert
+            var pokemonObtido = await pokemonService.FindById(pokemon.Id);
+
+            Assert.True(pokemonObtido.Id > faixaDeValoresDeCadastrados);
         }
     }
 }
